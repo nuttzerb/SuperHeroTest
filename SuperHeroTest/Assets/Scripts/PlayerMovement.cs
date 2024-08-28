@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Vector3 _moveInput;
     private Rigidbody _rb;
-    private float _movementSpeed = 5f;
+    [SerializeField] private float _movementSpeed = 5f;
     private NavMeshAgent _agent;
     [SerializeField] private PlayerVisual _playerVisual;
     private float _rotationSpeed = 555f; // Rotation speed in degrees per second
