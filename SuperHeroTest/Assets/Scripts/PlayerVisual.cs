@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Animator _animator;
+
     void Start()
     {
-        
+        _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetRunningAnimation(bool value)
     {
-        
+        _animator.SetBool("IsRunning",value);
     }
+
 }

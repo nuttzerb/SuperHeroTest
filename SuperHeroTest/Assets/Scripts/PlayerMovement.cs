@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private NavMeshAgent _agent;
 
     [SerializeField] private PlayerVisual _playerVisual;
-    private float rotationSpeed = 555f; // Rotation speed in degrees per second
+    private float _rotationSpeed = 555f; // Rotation speed in degrees per second
+    private Vector3 _agentMoveDirection;
 
     void Awake()
     {
@@ -24,18 +25,25 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ProcessClickToMoveInput();
-        FaceTarget();
+        UpdatePlayerRotation();
+        UpdateRunningAnimation();
     }
 
     void FixedUpdate()
     {
-        _rb.MovePosition(_rb.position + _moveInput * _movementSpeed * Time.fixedDeltaTime);
+        if (_moveInput.magnitude > 0)
+        {
+            _rb.MovePosition(_rb.position + _moveInput * _movementSpeed * Time.fixedDeltaTime);
+        }
     }
     void OnMove(InputValue value)
     {
-        _agent.enabled = false;
+        if (_agent.enabled)
+        {
+            _agent.enabled = false;
+        }
         _moveInput = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
-        Debug.Log(_moveInput);
+
     }
     private void ProcessClickToMoveInput()
     {
@@ -52,24 +60,40 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FaceTarget()
+    private void UpdatePlayerRotation()
     {
         if (_agent.enabled)
         {
-            Vector3 direction = (_agent.destination - transform.position).normalized;
-            if(direction!= Vector3.zero)
+            _agentMoveDirection = (_agent.destination - transform.position).normalized;
+            if (_agentMoveDirection != Vector3.zero)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                transform.rotation = Quaternion.Slerp(_playerVisual.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                FaceTarget(new Vector3(_agentMoveDirection.x, 0, _agentMoveDirection.z));
             }
         }
         else
         {
             if (_moveInput.magnitude >= 0.1f)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(_moveInput);
-                transform.rotation = Quaternion.Slerp(_playerVisual.gameObject.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                FaceTarget(_moveInput);
             }
+        }
+    }
+
+    private void FaceTarget(Vector3 rotation)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(rotation);
+        transform.rotation = Quaternion.Slerp(_playerVisual.gameObject.transform.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
+    }
+
+    private void UpdateRunningAnimation()
+    {
+        if (_agent.enabled)
+        {
+            _playerVisual.SetRunningAnimation(_agentMoveDirection != Vector3.zero);
+        }
+        else
+        {
+            _playerVisual.SetRunningAnimation(_moveInput != Vector3.zero);
         }
     }
 }
