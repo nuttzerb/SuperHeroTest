@@ -10,12 +10,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveInput;
     private Rigidbody _rb;
     private float _movementSpeed = 5f;
-
     private NavMeshAgent _agent;
-
     [SerializeField] private PlayerVisual _playerVisual;
     private float _rotationSpeed = 555f; // Rotation speed in degrees per second
     private Vector3 _agentMoveDirection;
+    private Vector3 _inputMoveDirection;
+
+    [SerializeField] CameraController _cameraController;
 
     void Awake()
     {
@@ -27,13 +28,17 @@ public class PlayerMovement : MonoBehaviour
         ProcessClickToMoveInput();
         UpdatePlayerRotation();
         UpdateRunningAnimation();
+
     }
 
     void FixedUpdate()
     {
         if (_moveInput.magnitude > 0)
         {
-            _rb.MovePosition(_rb.position + _moveInput * _movementSpeed * Time.fixedDeltaTime);
+            _inputMoveDirection = _cameraController.transform.forward * _moveInput.z + _cameraController.transform.right * _moveInput.x;
+            _inputMoveDirection.y = 0;
+            _inputMoveDirection.Normalize();
+            _rb.MovePosition(_rb.position + _inputMoveDirection * _movementSpeed * Time.fixedDeltaTime);
         }
     }
     void OnMove(InputValue value)
@@ -43,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
             _agent.enabled = false;
         }
         _moveInput = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
-
     }
     private void ProcessClickToMoveInput()
     {
@@ -74,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_moveInput.magnitude >= 0.1f)
             {
-                FaceTarget(_moveInput);
+                FaceTarget(_inputMoveDirection);
             }
         }
     }

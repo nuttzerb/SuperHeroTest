@@ -566,6 +566,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1682275515797226220, guid: 0e690275743a80642970a41188d1bb88, type: 3}
+      propertyPath: _cameraController
+      value: 
+      objectReference: {fileID: 1275623503}
     - target: {fileID: 3436898628582120662, guid: 0e690275743a80642970a41188d1bb88, type: 3}
       propertyPath: m_Name
       value: Player
