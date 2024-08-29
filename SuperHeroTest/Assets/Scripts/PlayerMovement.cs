@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnMove(InputValue value)
     {
+        if (ChatUIManager.isChatInputFocused) return;
         if (_agent.enabled)
         {
             _agent.enabled = false;
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ProcessClickToMoveInput()
     {
+        if(ChatUIManager.onMousePointer) return;
         if (Input.GetMouseButtonDown(0))
         {
             _agent.enabled = true;
