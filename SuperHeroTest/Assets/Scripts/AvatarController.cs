@@ -1,34 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AvatarController : MonoBehaviour
 {
-    [SerializeField] private Transform _player; 
-    [SerializeField] private Vector3 _offset = new Vector3(0, 2, 0);
+    [SerializeField] private Transform _player;
+    [SerializeField] private float _offset = 2.1f;
     [SerializeField] private Camera _mainCamera;
-
-    private RectTransform _rectTransform;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
         if (_mainCamera == null)
         {
             _mainCamera = Camera.main;
         }
     }
 
-    private void Update()
+    void LateUpdate()
     {
-        transform.position = _player.position + _offset;
+        transform.position = Camera.main.WorldToScreenPoint(_player.transform.position + Vector3.up * _offset);
 
-        Vector3 directionToCamera = _mainCamera.transform.position - transform.position;
-        transform.forward = directionToCamera.normalized;
     }
 
-    public RectTransform GetRectTransform()
-    {
-        return _rectTransform;
-    }
 }
