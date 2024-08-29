@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     private float _maxZoomDistance = 10f;
     private float _currentZoomDistance;
 
+    [SerializeField] private AvatarController _avatarController;
 
     void Start()
     {
@@ -43,6 +44,9 @@ public class CameraController : MonoBehaviour
         _currentZoomDistance -= scrollInput * _zoomSpeed;
         _currentZoomDistance = Mathf.Clamp(_currentZoomDistance, _minZoomDistance, _maxZoomDistance);
         _cinemachineFramingTransposer.m_CameraDistance = _currentZoomDistance;
+
+        var offsetValue = (10 -  _currentZoomDistance) * 1/2;
+        _avatarController.GetRectTransform().sizeDelta = new Vector2(24 - offsetValue, 24 - offsetValue);
     }
     private void DragToRotate()
     {
@@ -61,5 +65,9 @@ public class CameraController : MonoBehaviour
             Vector2 mouseMovementDelta = (Vector2)Input.mousePosition - _lastMousePosition;
             transform.eulerAngles = _lastCameraRotation + new Vector3(-1 * mouseMovementDelta.y, mouseMovementDelta.x) * _cameraRotateSpeed;
         }
+    }
+    public float GetCurrentZoomDistance()
+    {
+        return _currentZoomDistance;
     }
 }
