@@ -30,7 +30,11 @@ public class DownloadImg : MonoBehaviour
             {
                 Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                _targetImage.sprite = sprite;
+                    _targetImage.sprite = sprite;
+                if(!_targetImage.gameObject.activeInHierarchy)
+                {
+                    _targetImage.gameObject.SetActive(true);
+                }
             }
             else
             {

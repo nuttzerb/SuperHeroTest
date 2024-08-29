@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 926262718}
-  _offset: {x: 0, y: 2.1, z: 0}
+  _offset: 2.1
   _mainCamera: {fileID: 963194227}
 --- !u!114 &595451702
 MonoBehaviour:
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _downloadButton: {fileID: 1661897113}
   _imageUrl: https://picsum.photos/24
-  _targetImage: {fileID: 0}
+  _targetImage: {fileID: 595451702}
 --- !u!1 &1846834092
 GameObject:
   m_ObjectHideFlags: 3
