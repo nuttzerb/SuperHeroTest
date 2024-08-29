@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     private void FaceTarget(Vector3 rotation)
     {
         Quaternion lookRotation = Quaternion.LookRotation(rotation);
-        transform.rotation = Quaternion.Slerp(_playerVisual.gameObject.transform.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
+        _playerVisual.gameObject.transform.rotation = Quaternion.Slerp(_playerVisual.gameObject.transform.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
     }
 
     private void UpdateRunningAnimation()
