@@ -18,47 +18,51 @@ public class ChatUIManager : MonoBehaviour
     [SerializeField] private GameObject chatContent;
     [SerializeField] private GameObject textObject;
 
-    [SerializeField] private InputField chatInput;
+    [SerializeField] private InputField chatInputField;
     private float maxMessage = 25;
     [SerializeField] PlayerChatTextPopup _playerChatTextPopup;
 
+    [SerializeField] int maxCharacter = 20;
+
     void Start()
     {
-        chatPanel.SetActive(false);
-        chatInput.gameObject.SetActive(true);
+        InitChatUI();
+
     }
+
     void Update()
     {
-        if (chatInput.text != "")
+        if (chatInputField.text != "")
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SendMessageToChat(chatInput.text);
-                chatInput.text = "";
-                chatInput.ActivateInputField();
+                SendMessageToChat(chatInputField.text);
+                chatInputField.text = "";
+                chatInputField.ActivateInputField();
                 isChatInputFocused = true;
             }
         }
         else
         {
 
-            if (!chatPanel.activeInHierarchy && !chatInput.isFocused && (Input.GetKeyDown(KeyCode.Return) || (onMousePointer && Input.GetMouseButtonDown(0))))
+            if (!chatPanel.activeInHierarchy && !chatInputField.isFocused && (Input.GetKeyDown(KeyCode.Return) || (onMousePointer && Input.GetMouseButtonDown(0))))
             {
                 chatPanel.SetActive(true);
-                chatInput.ActivateInputField();
+                chatInputField.interactable = true;
+                chatInputField.ActivateInputField();
                 isChatInputFocused = true;
+
 
             }
             else if (chatPanel.activeInHierarchy && (Input.GetKeyDown(KeyCode.Return) || (!onMousePointer && Input.GetMouseButtonDown(0))))
             {
                 chatPanel.SetActive(false);
-                chatInput.DeactivateInputField();
                 isChatInputFocused = false;
+                chatInputField.DeactivateInputField();
+                chatInputField.interactable = false;
 
             }
         }
-
-
     }
     public void OnPointerEnter()
     {
@@ -70,6 +74,13 @@ public class ChatUIManager : MonoBehaviour
         onMousePointer = false;
 
 
+    }
+    private void InitChatUI()
+    {
+        chatPanel.SetActive(false);
+        chatInputField.gameObject.SetActive(true);
+        chatInputField.interactable = false;
+        chatInputField.characterLimit = maxCharacter;
     }
     public void SendMessageToChat(String text)
     {

@@ -727,10 +727,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1138068658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 196.5, y: -11}
+  m_SizeDelta: {x: 385, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &313443152
 MonoBehaviour:
@@ -765,7 +765,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 --- !u!222 &313443153
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -792,7 +792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &436869571
 RectTransform:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -92.3, y: 121.4}
-  m_SizeDelta: {x: 59.3491, y: 0}
+  m_SizeDelta: {x: 393, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &436869572
 MonoBehaviour:
@@ -867,7 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
 --- !u!1 &593592477
 GameObject:
@@ -1612,8 +1612,9 @@ MonoBehaviour:
   chatPanel: {fileID: 713087767}
   chatContent: {fileID: 224107391}
   textObject: {fileID: 6850461805690386446, guid: fdd5bbea519293946824ba409e17a73f, type: 3}
-  chatInput: {fileID: 100728215}
+  chatInputField: {fileID: 100728215}
   _playerChatTextPopup: {fileID: 436869573}
+  maxCharacter: 20
 --- !u!1 &1120134067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,10 +1721,10 @@ RectTransform:
   - {fileID: 313443151}
   m_Father: {fileID: 436869571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 196.5, y: -11}
+  m_SizeDelta: {x: 393, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1138068659
 MonoBehaviour:
