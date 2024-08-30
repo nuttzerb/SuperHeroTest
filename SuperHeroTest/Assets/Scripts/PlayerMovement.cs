@@ -64,9 +64,16 @@ public class PlayerMovement : MonoBehaviour
         {
             _agent.isStopped = false;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+
+
             if (Physics.Raycast(ray.origin, ray.direction, out var hitInfo))
             {
-                _agent.destination = hitInfo.point;
+                NavMeshHit navMeshHit;
+                if (NavMesh.SamplePosition(hitInfo.point, out navMeshHit, 1.0f, NavMesh.AllAreas))
+                {
+                    _agent.destination = hitInfo.point;
+                }
             }
         }
 
