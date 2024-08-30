@@ -12,7 +12,7 @@ public class PlayerChatTextPopup : MonoBehaviour
     [SerializeField] private Text _text;
 
     private float _disapearTimer;
-    private float _timeToDisapear = 5f;
+    private float _timeToDisapear = 3f;
 
 
     private void Start()
