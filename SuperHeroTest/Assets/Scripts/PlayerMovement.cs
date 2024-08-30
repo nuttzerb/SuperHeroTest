@@ -29,46 +29,39 @@ public class PlayerMovement : MonoBehaviour
         UpdatePlayerRotation();
         UpdateRunningAnimation();
 
-    }
-
-    void FixedUpdate()
-    {
-        if (_moveInput.magnitude > 0)
+        if (_agent.isStopped)
         {
             _inputMoveDirection = _cameraController.transform.forward * _moveInput.z + _cameraController.transform.right * _moveInput.x;
             _inputMoveDirection.y = 0;
             _inputMoveDirection.Normalize();
-            _rb.MovePosition(_rb.position + _inputMoveDirection * _movementSpeed * Time.fixedDeltaTime);
+            _agent.Move(_inputMoveDirection * _agent.speed * Time.deltaTime);
         }
     }
     void OnMove(InputValue value)
     {
         if (ChatUIManager.isChatInputFocused) return;
-        if (_agent.enabled)
-        {
-            _agent.enabled = false;
-        }
         _moveInput = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
+        _agent.isStopped = true;
     }
     private void ProcessClickToMoveInput()
     {
-        if(ChatUIManager.onMousePointer) return;
+        if (ChatUIManager.onMousePointer) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            _agent.enabled = true;
+            _agent.isStopped = false;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray.origin, ray.direction, out var hitInfo))
             {
-                Vector3 randomOffset = Random.insideUnitCircle * 0.5f;
-                randomOffset.y = 0;
-                _agent.destination = hitInfo.point + randomOffset;
+                _agent.destination = hitInfo.point;
             }
         }
+
     }
 
     private void UpdatePlayerRotation()
     {
-        if (_agent.enabled)
+        if (_agent.isStopped == false)
         {
             _agentMoveDirection = (_agent.destination - transform.position).normalized;
             if (_agentMoveDirection != Vector3.zero)
@@ -93,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateRunningAnimation()
     {
-        if (_agent.enabled)
+        if (_agent.isStopped == false)
         {
             _playerVisual.SetRunningAnimation(_agentMoveDirection != Vector3.zero);
         }
