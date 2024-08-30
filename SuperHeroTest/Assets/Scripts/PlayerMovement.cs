@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void ProcessClickToMoveInput()
     {
         if (ChatUIManager.onMousePointer) return;
+        if(ChatUIManager.isChatInputFocused) return;
 
         if (Input.GetMouseButtonDown(0))
         {
