@@ -20,7 +20,6 @@ public class AvatarController : MonoBehaviour
     void LateUpdate()
     {
         transform.position = Camera.main.WorldToScreenPoint(_player.transform.position + Vector3.up * _offset);
-
     }
 
 }

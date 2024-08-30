@@ -20,7 +20,7 @@ public class ChatUIManager : MonoBehaviour
 
     [SerializeField] private InputField chatInput;
     private float maxMessage = 25;
-
+    [SerializeField] PlayerChatTextPopup _playerChatTextPopup;
 
     void Start()
     {
@@ -42,7 +42,7 @@ public class ChatUIManager : MonoBehaviour
         else
         {
 
-            if (!chatPanel.activeInHierarchy && !chatInput.isFocused && (Input.GetKeyDown(KeyCode.Return) || (onMousePointer&& Input.GetMouseButtonDown(0))))
+            if (!chatPanel.activeInHierarchy && !chatInput.isFocused && (Input.GetKeyDown(KeyCode.Return) || (onMousePointer && Input.GetMouseButtonDown(0))))
             {
                 chatPanel.SetActive(true);
                 chatInput.ActivateInputField();
@@ -85,6 +85,9 @@ public class ChatUIManager : MonoBehaviour
         newMessage.textObject = newText.GetComponent<Text>();
         newMessage.textObject.text = newMessage.text;
         messageList.Add(newMessage);
+
+        _playerChatTextPopup.InitTextPopup(text);
+
     }
 }
 public class Message
