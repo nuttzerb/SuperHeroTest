@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,7 +29,17 @@ public class PlayerMovement : MonoBehaviour
         ProcessClickToMoveInput();
         UpdatePlayerRotation();
         UpdateRunningAnimation();
+        ProcessPressToMoveInput();
 
+        // force agente stopped
+        if (_agent.destination == transform.position)
+        {
+            _agent.isStopped = true;
+        }
+    }
+
+    private void ProcessPressToMoveInput()
+    {
         if (_agent.isStopped)
         {
             _inputMoveDirection = _cameraController.transform.forward * _moveInput.z + _cameraController.transform.right * _moveInput.x;
@@ -37,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
             _agent.Move(_inputMoveDirection * _agent.speed * Time.deltaTime);
         }
     }
+
     void OnMove(InputValue value)
     {
         if (ChatUIManager.isChatInputFocused) return;
@@ -46,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     private void ProcessClickToMoveInput()
     {
         if (ChatUIManager.onMousePointer) return;
-        if(ChatUIManager.isChatInputFocused) return;
+        if (ChatUIManager.isChatInputFocused) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -65,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         if (_agent.isStopped == false)
         {
             _agentMoveDirection = (_agent.steeringTarget - transform.position).normalized;
-            if (_agentMoveDirection != Vector3.zero)
+            if (_agent.destination != transform.position)
             {
 
                 FaceTarget(_agentMoveDirection);
@@ -83,14 +95,16 @@ public class PlayerMovement : MonoBehaviour
     private void FaceTarget(Vector3 rotation)
     {
         Quaternion lookRotation = Quaternion.LookRotation(rotation);
-        _playerVisual.gameObject.transform.rotation = Quaternion.Slerp(_playerVisual.gameObject.transform.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
+        var _playerVisualTransform = _playerVisual.gameObject.transform;
+        _playerVisualTransform.rotation = Quaternion.Slerp(_playerVisualTransform.rotation, lookRotation, _rotationSpeed * Time.deltaTime);
+        _playerVisualTransform.eulerAngles = new Vector3(0, _playerVisualTransform.eulerAngles.y, 0);
     }
 
     private void UpdateRunningAnimation()
     {
         if (_agent.isStopped == false)
         {
-            _playerVisual.SetRunningAnimation(_agentMoveDirection != Vector3.zero);
+            _playerVisual.SetRunningAnimation(_agent.destination != transform.position);
         }
         else
         {

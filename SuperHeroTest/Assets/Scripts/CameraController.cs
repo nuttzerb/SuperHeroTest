@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     private CinemachineFramingTransposer _cinemachineFramingTransposer;
     [SerializeField] private float _zoomSpeed = 10f;
     private float _minZoomDistance = 2f;
-    private float _maxZoomDistance = 10f;
+    private float _maxZoomDistance = 15f;
     private float _currentZoomDistance;
 
     void Start()
