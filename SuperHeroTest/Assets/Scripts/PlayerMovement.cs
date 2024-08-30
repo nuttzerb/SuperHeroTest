@@ -63,10 +63,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_agent.isStopped == false)
         {
-            _agentMoveDirection = (_agent.destination - transform.position).normalized;
+            _agentMoveDirection = (_agent.steeringTarget - transform.position).normalized;
             if (_agentMoveDirection != Vector3.zero)
             {
-                FaceTarget(new Vector3(_agentMoveDirection.x, 0, _agentMoveDirection.z));
+
+                FaceTarget(_agentMoveDirection);
             }
         }
         else
