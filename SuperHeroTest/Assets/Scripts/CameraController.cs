@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
     }
     private void WheelToScroll()
     {
+        if(ChatUIManager.onMousePointer) return;
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         _currentZoomDistance -= scrollInput * _zoomSpeed;
         _currentZoomDistance = Mathf.Clamp(_currentZoomDistance, _minZoomDistance, _maxZoomDistance);
