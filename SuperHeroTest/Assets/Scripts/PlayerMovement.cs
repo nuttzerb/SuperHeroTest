@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ChatUIManager.onMousePointer) return;
         if (ChatUIManager.isChatInputFocused) return;
-
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         if (Input.GetMouseButtonDown(0))
         {
             _agent.isStopped = false;
